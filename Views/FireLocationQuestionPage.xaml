@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="FireReporter.Views.FireLocationQuestionPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Fire Reporting"
+             BackgroundColor="{StaticResource SubtleBackground}">
+    <Grid RowDefinitions="Auto,*,*">
+        
+        <!-- "Your response was shared" Section -->
+        <Frame Grid.Row="0" BackgroundColor="Transparent" BorderColor="Transparent" Padding="0">
+            <VerticalStackLayout Spacing="20" Padding="20" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
+                <Border Stroke="Black"
+                        StrokeThickness="2"
+                        BackgroundColor="{StaticResource SubtleDialogBackground}"
+                        Padding="8, 5, 8, 5"
+                        Margin="30, 10, 30, 10">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="100"/>
+                    </Border.StrokeShape>
+                    <Label Text="Response shared ✓" 
+                           FontSize="Medium"
+                           HorizontalTextAlignment="Center"
+                           Padding="0,5"
+                           TextColor="Black"/>
+                </Border>
+                <Label Text="Please share additional details, which may help emergency services" 
+                       FontSize="Small"
+                       TextColor="Black"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Inside Fire Tile -->
+        <Frame Grid.Row="1"
+               BackgroundColor="#222"
+               Margin="10"
+               CornerRadius="20"
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnInsideFireClicked" />
+            </Frame.GestureRecognizers>
+            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <Label Text="Inside fire" 
+                       TextColor="White"
+                       FontSize="Large"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Outside Fire Tile -->
+        <Frame Grid.Row="2"
+               BackgroundColor="#111"
+               Margin="10"
+               CornerRadius="20"
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnOutsideFireClicked" />
+            </Frame.GestureRecognizers>
+            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <Label Text="Outside fire" 
+                       TextColor="White"
+                       FontSize="Large"/>
+            </VerticalStackLayout>
+        </Frame>
+        
+    </Grid>
+</ContentPage>

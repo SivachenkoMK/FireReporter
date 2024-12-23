@@ -1,0 +1,147 @@
+﻿<ContentPage
+    x:Class="FireReporter.Views.FireReportingPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Fire Reporting"
+    BackgroundColor="{StaticResource SubtleBackground}">
+
+    <Grid RowDefinitions="Auto,*" ColumnDefinitions="*">
+
+        <!-- LOCATION REQUEST SECTION -->
+        <Frame Grid.Row="0"
+               x:Name="LocationRequestContainer"
+               BackgroundColor="{StaticResource SubtleDialogBackground}"
+               CornerRadius="28"
+               Padding="20"
+               Margin="10,10"
+               IsVisible="True">
+            <VerticalStackLayout VerticalOptions="Start">
+                <Label Text="Location Permission Request"
+                       FontSize="22"
+                       TextColor="Black"
+                       LineHeight="28"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Start" />
+                <Label Text="This app collects your location only when you report a fire. This information is used to assist emergency services in responding to fires effectively. Please grant location access to proceed."
+                       TextColor="Black"
+                       FontSize="14"
+                       LineHeight="1"
+                       TextType="Text"
+                       Height="1"
+                       HorizontalTextAlignment="Start"
+                       LineBreakMode="WordWrap"
+                       MaxLines="10"
+                       VerticalOptions="Start"
+                       Margin="0,5,0,5"/>
+                <HorizontalStackLayout HorizontalOptions="End" Spacing="10">
+                    <Button Text="Accept"
+                            Clicked="OnAcceptClicked"
+                            BackgroundColor="Transparent"
+                            FontSize="14" />
+                    <Button Text="Decline"
+                            Clicked="OnDeclineClicked"
+                            BackgroundColor="Transparent"
+                            FontSize="14" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- FIRE INSTRUCTIONS SECTION -->
+        <Grid Grid.Row="1" Padding="20,10" RowDefinitions="Auto,*" VerticalOptions="FillAndExpand" IsVisible="False" x:Name="FireInstructionsLayout">
+
+            <!-- Title / Steps Section -->
+            <VerticalStackLayout Grid.Row="0">
+                <Border Stroke="Black"
+                        StrokeThickness="2"
+                        BackgroundColor="{StaticResource SubtleDialogBackground}"
+                        Padding="8, 5, 8, 5"
+                        Margin="30, 10, 30, 10">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="100"/>
+                    </Border.StrokeShape>
+                    <Label Text="How to report fire" 
+                           FontSize="Large"
+                           HorizontalTextAlignment="Center"
+                           Padding="0,5"
+                           TextColor="Black"/>
+                </Border>
+                <Label Text="1. Make sure you follow the steps from below: evacuate to safe location and call emergency services."
+                       TextColor="Black"
+                       FontSize="Small" />
+                <Label Text="2. Confirm it by selecting corresponding options."
+                       TextColor="Black"
+                       FontSize="Small" />
+                <Label Text="3. Prepare to take a photo of the fire, if it is still visible."
+                       TextColor="Black"
+                       FontSize="Small" />
+                <Label Text="4. Be ready to answer important questions afterwards."
+                       TextColor="Black"
+                       FontSize="Small" />
+                <Label Text="5. Wait for help."
+                       TextColor="Black"
+                       FontSize="Small" />
+            </VerticalStackLayout>
+
+            <!-- Checklist and Button Section -->
+            <VerticalStackLayout Grid.Row="1" VerticalOptions="End" Spacing="20">
+                <Frame BackgroundColor="{StaticResource SubtleDialogBackground}"
+                       CornerRadius="28"
+                       Padding="20"
+                       Margin="0,20">
+                    <VerticalStackLayout>
+                        <Label Text="In case of fire"
+                               FontSize="Medium"
+                               TextColor="Black"/>
+                        <Label Text="Stay calm and follow these steps:" 
+                               FontSize="Micro"
+                               Padding="0, 5"
+                               TextColor="Black"/>
+                        <HorizontalStackLayout>
+                            <CheckBox x:Name="ChkEvacuate" Color="Chocolate" />
+                            <Label Text="Evacuate immediately"
+                                   VerticalOptions="Center"
+                                   TextColor="Black">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Tapped="OnChkEvacuateTapped"
+                                        NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout>
+                            <CheckBox x:Name="ChkCallEmergency" Color="Chocolate" />
+                            <Label Text="Call emergency services"
+                                   VerticalOptions="Center"
+                                   TextColor="Black">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Tapped="OnChkCallEmergencyTapped"
+                                        NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout>
+                            <CheckBox x:Name="ChkReport" Color="Chocolate" />
+                            <Label Text="Report fire with this app"
+                                   VerticalOptions="Center"
+                                   TextColor="Black">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Tapped="OnChkReportTapped"
+                                        NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+                <Button x:Name="BtnReport"
+                        Text="Report"
+                        IsEnabled="False"
+                        BackgroundColor="{StaticResource Gray950}"
+                        TextColor="WhiteSmoke"
+                        Clicked="OnReportClicked" >
+                </Button>
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

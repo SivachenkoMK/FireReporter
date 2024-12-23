@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="FireReporter.Views.ThankYouPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Fire Reporting"
+             BackgroundColor="{StaticResource SubtleBackground}">
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20">
+
+        <!-- Labels on top -->
+        <VerticalStackLayout Grid.Row="0" Spacing="10" VerticalOptions="Start">
+            <Border Stroke="Black"
+                    StrokeThickness="2"
+                    BackgroundColor="{StaticResource SubtleDialogBackground}"
+                    Padding="8, 5, 8, 5"
+                    Margin="30, 10, 30, 10">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="100"/>
+                </Border.StrokeShape>
+                <Label Text="Response shared ✓" 
+                       FontSize="Medium"
+                       HorizontalTextAlignment="Center"
+                       Padding="0,5"
+                       TextColor="Black"/>
+            </Border>
+            <Label Text="Thank you for reporting the incident." 
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" 
+                   HorizontalTextAlignment="Center"
+                   TextColor="Black" />
+            <Label Text="We shared the information with emergency services.." 
+                   FontSize="Medium"
+                   HorizontalOptions="Center" 
+                   HorizontalTextAlignment="Center"
+                   TextColor="Black" />
+        </VerticalStackLayout>
+
+        <!-- Button at the bottom -->
+        <Button Grid.Row="2"
+                Text="Return"
+                BackgroundColor="Black"
+                TextColor="White"
+                VerticalOptions="End"
+                Clicked="OnReturnClicked"/>
+
+    </Grid>
+</ContentPage>

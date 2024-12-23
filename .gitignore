@@ -1,0 +1,89 @@
+﻿# .NET build artifacts
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.userprefs
+
+# IDE specific settings (VSCode, JetBrains Rider, etc.)
+.idea/
+*.sln.iml
+.vscode/
+
+# macOS specific
+.DS_Store
+
+# Windows specific
+Thumbs.db
+desktop.ini
+
+# Xamarin and MAUI specific
+*.userosscache
+*.apk
+*.ap_
+*.keystore
+*.zipalign
+*.ipa
+*.xcuserstate
+*.lock
+*.aab
+
+# macOS - iOS builds
+*.app
+*.dSYM
+build/
+DerivedData/
+
+# MAUI related
+.platform/
+.resources/
+.cache/
+
+# NuGet packages
+*.nupkg
+packages/
+.nuget/
+
+# Logs
+*.log
+
+# App-specific settings
+appsettings.json
+appsettings.*.json
+
+# Secrets and sensitive files
+secrets.json
+*.key
+*.pfx
+*.cer
+
+# Environment files
+.env
+.env.*
+
+# Node and npm
+node_modules/
+package-lock.json
+yarn.lock
+
+# Generated files
+*.g.*
+*.designer.cs
+
+# Coverage files
+coverage/
+*.coverage
+*.coveragexml
+lcov-report/
+
+# Crash reports
+crashlytics/
+firebase/
+
+# Temporary files
+*.tmp
+*.temp
