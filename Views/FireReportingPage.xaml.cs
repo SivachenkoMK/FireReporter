@@ -1,14 +1,18 @@
-﻿using FireReporter.Reporting;
+﻿using System.Net.Http.Json;
+using FireReporter.DTOs;
+using FireReporter.Reporting;
 
 namespace FireReporter.Views;
 
 public partial class FireReportingPage : ContentPage
 {
     private readonly UserState _userState;
+    private readonly IHttpClientFactory _httpClientFactory;
     
-    public FireReportingPage(UserState userState)
+    public FireReportingPage(UserState userState, IHttpClientFactory httpClientFactory)
     {
         _userState = userState;
+        _httpClientFactory = httpClientFactory;
         InitializeComponent();
     }
 
@@ -93,14 +97,38 @@ public partial class FireReportingPage : ContentPage
 
     private async void OnReportClicked(object sender, EventArgs e)
     {
-        // To collect location here
         var isNewSession = _userState.TryNewSessionCreation();
         if (isNewSession)
         {
-            // Send user location + id
+            try
+            {
+                var location = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(10)));
+                if (location != null)
+                {
+                    var gisRequest = new GisRequest
+                    {
+                        SessionGuid = _userState.IncidentId,
+                        Latitude = location.Latitude,
+                        Longitude = location.Longitude
+                    };
+
+                    var client = _httpClientFactory.CreateClient(Constants.HttpClientName);
+
+                    var response = await client.PostAsJsonAsync("api/track/gis", gisRequest);
+                    response.EnsureSuccessStatusCode();
+                }
+                else
+                {
+                    await DisplayAlert("Location Error", "Failed to retrieve your location.", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Failed to send GIS data: {ex.Message}", "OK");
+            }
         }
         
-        await Navigation.PushAsync(new PhotoPage());
+        await Navigation.PushAsync(new PhotoPage(_userState, _httpClientFactory));
     }
     
     private void OnChkEvacuateTapped(object sender, EventArgs e)

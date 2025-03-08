@@ -1,15 +1,25 @@
-﻿namespace FireReporter.Views;
+﻿using FireReporter.Reporting;
+
+namespace FireReporter.Views;
 
 public partial class PhotoPage : ContentPage
 {
-    public PhotoPage()
+    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly UserState _userState;
+    private readonly HttpClient _httpClient;
+    
+    public PhotoPage(UserState userState, IHttpClientFactory httpClientFactory)
     {
+        _httpClientFactory = httpClientFactory;
+        _userState = userState;
+
+        _httpClient = httpClientFactory.CreateClient(Constants.HttpClientName);
         InitializeComponent();
     }
 
     private async void OnSkipClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new FireLocationQuestionPage());
+        await Navigation.PushAsync(new FireLocationQuestionPage(_userState, _httpClientFactory));
     }
 
     private async void OnTakePhotoClicked(object sender, EventArgs e)
@@ -29,11 +39,11 @@ public partial class PhotoPage : ContentPage
                 var photo = await MediaPicker.CapturePhotoAsync();
                 if (photo != null)
                 {
-                    // Handle the photo (e.g., save or display)
+                    await SendPhotoToServerAsync(photo);
                 }
 
                 // Navigate to the next page
-                await Navigation.PushAsync(new FireLocationQuestionPage());
+                await Navigation.PushAsync(new FireLocationQuestionPage(_userState, _httpClientFactory));
             }
             else
             {
@@ -45,6 +55,28 @@ public partial class PhotoPage : ContentPage
         {
             // Handle unexpected exceptions
             await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+        }
+    }
+    
+    private async Task SendPhotoToServerAsync(FileResult photo)
+    {
+        try
+        {
+            await using var stream = await photo.OpenReadAsync();
+            using var content = new MultipartFormDataContent();
+
+            using var fileContent = new StreamContent(stream);
+            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
+
+            content.Add(fileContent, "Photo", "photo.jpg");
+            content.Add(new StringContent(_userState.IncidentId.ToString()), "SessionGuid");
+
+            var response = await _httpClient.PostAsync("api/track/photo", content);
+            response.EnsureSuccessStatusCode();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Upload Error", $"Failed to upload photo: {ex.Message}", "OK");
         }
     }
 }

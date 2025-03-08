@@ -9,6 +9,10 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
+        builder.Services.AddHttpClient(Constants.HttpClientName, client =>
+        {
+            client.BaseAddress = new Uri("https://api.firetracker.sivach.me/");
+        });
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
