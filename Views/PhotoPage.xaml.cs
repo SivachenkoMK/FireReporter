@@ -66,7 +66,7 @@ public partial class PhotoPage : ContentPage
             using var content = new MultipartFormDataContent();
 
             using var fileContent = new StreamContent(stream);
-            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
+            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("multipart/form-data");
 
             content.Add(fileContent, "Photo", "photo.jpg");
             content.Add(new StringContent(_userState.IncidentId.ToString()), "SessionGuid");

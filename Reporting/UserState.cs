@@ -2,7 +2,7 @@
 
 public class UserState
 {
-    private readonly TimeSpan _sessionActiveSpan = TimeSpan.FromHours(1);
+    private readonly TimeSpan _sessionActiveSpan = TimeSpan.FromMinutes(2);
     public Guid IncidentId { get; private set; }
     public DateTime IncidentTimestamp { get; private set; }
 
@@ -15,6 +15,9 @@ public class UserState
     public bool TryNewSessionCreation()
     {
         var newSessionCreationRequired = DateTime.UtcNow - IncidentTimestamp > _sessionActiveSpan;
+        #if DEBUG
+        newSessionCreationRequired = true;
+        #endif
         if (newSessionCreationRequired)
         {
             IncidentId = Guid.NewGuid();
